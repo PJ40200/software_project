@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="task-manager">
+    <header>
+      <h2>Welcome, William Jones!</h2>
+      <p>You have <span id="active-tasks">4 active tasks</span></p>
+    </header>
+    <main>
+      <div class="tasks-section">
+        <h3>Completed Tasks</h3>
+        <div class="task-list" id="completed-tasks">
+          <!-- Example Tasks -->
+          <div class="task" data-id="1">
+            <p><strong>Water Plants</strong></p>
+            <p>Water the indoor plants, especially the ones near the living room window.</p>
+            <div class="task-meta">
+              <span class="priority medium">medium</span>
+              <button class="edit-task">✏️</button>
+              <button class="delete-task">🗑️</button>
+            </div>
+          </div>
+          <div class="task" data-id="2">
+            <p><strong>Backup Files</strong></p>
+            <p>Back up all important files to the cloud storage before the weekend.</p>
+            <div class="task-meta">
+              <span class="priority medium">medium</span>
+              <button class="edit-task">✏️</button>
+              <button class="delete-task">🗑️</button>
+            </div>
+          </div>
+        </div>
+        <div class="add-task">
+          <button id="add-task-btn">Add New Task</button>
+        </div>
+      </div>
+      <aside>
+        <div class="user-info">
+          <h3>Hello, William Jones</h3>
+          <ul>
+            <li>Total Tasks: <span id="total-tasks">6</span></li>
+            <li>In Progress: <span id="in-progress">4</span></li>
+            <li>Open Tasks: <span id="open-tasks">4</span></li>
+            <li>Completed: <span id="completed">2</span></li>
+          </ul>
+        </div>
+        <div class="activity">
+          <h4>Activity</h4>
+          <p>Task Completion improved by <strong>12%</strong> this month</p>
+        </div>
+      </aside>
+      <div class="sidebar">
+         <a href="#">Home</a>
+         <a href=""></a>
+      </div>
+  
+    </main>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>
