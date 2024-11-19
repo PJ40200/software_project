@@ -25,7 +25,7 @@ new taskSchema = mongoose.Schema(
         Date_Created :{
             type : Date
         }
-    }
+    }, {timestamps : true}
 )
 
 export const Task = mongoose.model("Task",taskSchema)  
