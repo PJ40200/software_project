@@ -1,0 +1,127 @@
+
+body {
+    font-family: 'Poppins', sans-serif; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #7cbec7, #d3a2da); 
+    color: #333;
+  }
+  
+  
+  .container {
+    width: 400px;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); 
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .container:hover {
+    transform: scale(1.0); 
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  h2 {
+    text-align: center;
+    color: #444444;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+  }
+  
+  label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #666666;
+  }
+  
+  input {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #cccccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
+    outline: none;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px); 
+  }
+  
+  button:active {
+    transform: translateY(1px); 
+  }
+  
+  
+  p {
+    text-align: center;
+    color: #555555;
+    font-size: 14px;
+  }
+  
+  span {
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  span:hover {
+    text-decoration: underline;
+  }
+  
+  
+  .hidden {
+    display: none;
+  }
+  
+  @media screen and (max-width: 480px) {
+    .container {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    input {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  
