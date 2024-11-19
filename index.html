@@ -1,6 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="main-container">
+    
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Header -->
+      <header>
+        <h1>Welcome, William Jones!</h1>
+        <p>You have <span id="active-tasks">0</span> active tasks.</p>
+        <button id="add-task-btn">Add a New Task</button>
+      </header>
+
+      <!-- Task Filter Section -->
+      <div class="filters">
+        <button class="filter-btn" data-priority="all">All</button>
+        <button class="filter-btn" data-priority="low">Low</button>
+        <button class="filter-btn" data-priority="medium">Medium</button>
+        <button class="filter-btn" data-priority="high">High</button>
+      </div>
+
+      <!-- Task List Section -->
+      <section id="task-list">
+        <!-- Dynamic tasks will appear here -->
+      </section>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
