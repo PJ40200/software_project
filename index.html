@@ -3,9 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1> Heading 1 </h1>
+    <div class="sidebar">
+        <div class="logo">🔄</div>
+        <div class="menu-item">📋 Tasks</div>
+        <div class="menu-item">📊 Analytics</div>
+        <div class="menu-item">⚙ Settings</div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Welcome, William Slater!</h1>
+            <p>You have 4 active tasks</p>
+            <button class="new-task-btn">Create a new Task</button>
+        </header>
+
+        <section class="task-section">
+            <div class="task-list">
+                <h2>Completed Tasks</h2>
+                <div class="task-card">
+                    <div class="task-status pending">Pending</div>
+                    <div class="task-details">
+                        <h3>Testing updates</h3>
+                        <p>hello</p>
+                        <div class="task-meta">
+                            <span>Yesterday</span>
+                            <span class="priority medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="task-actions">
+                        <button>⭐</button>
+                        <button>🗑</button>
+                    </div>
+                </div>
+                <div class="add-task">Add New Task</div>
+            </div>
+
+            <aside class="dashboard">
+                <div class="profile">
+                    <p>Hello, William Slater</p>
+                </div>
+                <div class="stats">
+                    <p>Total Tasks: <strong>5</strong></p>
+                    <p>In Progress: <strong>4</strong></p>
+                    <p>Open Tasks: <strong>4</strong></p>
+                    <p>Completed: <strong>1</strong></p>
+                </div>
+                <div class="activity">
+                    <h3>Activity</h3>
+                    <div class="chart">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <p>Task completion improved by 12% this month</p>
+                </div>
+            </aside>
+        </section>
+    </div>
 </body>
 </html>
