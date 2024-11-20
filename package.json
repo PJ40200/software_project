@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "mongoose": "^8.8.2"
-  }
+  },
+  "name": "se_project",
+  "description": "Task Manager website with user-friendly UI and functionality.",
+  "version": "1.0.0",
+  "main": "scripts.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Prachi Jindal",
+  "license": "ISC"
 }
