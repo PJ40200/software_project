@@ -7,15 +7,16 @@ new taskSchema = mongoose.Schema(
             required : true, 
             unique : true
         },
-        Status :{
-            type : String,
-            default : "Pending"
+        Completed :{
+            type : Boolean,
+            default : false
         },
         Description :{
             type : Text,
         },
         Priority: {
             type : String,
+            enum : ["Low","Medium","High"],
             required : true,
             default : "Low"
         },
