@@ -1,2 +1,2 @@
 # software_project
-we are four peopleee
+Task Manager website with user-friendly UI and functionality.
