@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       description,
       priority,
       deadline,
-      completed: false,
+      status: "pending",
     });
 
     taskModal.style.display = 'none';
@@ -49,14 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderTasks(filter = "all") {
     taskList.innerHTML = "";
 
-    const filteredTasks = tasks.filter(task => filter === "all" || task.completed === filter);
+    const filteredTasks = tasks.filter(task => filter === "all" || task.status === filter);
 
     filteredTasks.forEach(task => {
       const taskDiv = document.createElement('div');
       taskDiv.classList.add('task');
       taskDiv.setAttribute('data-id', task.id);
       taskDiv.innerHTML = `
-        <input type="checkbox" ${task.completed === true ? "checked" : ""} class="task-status">
+        <input type="checkbox" ${task.status === "completed" ? "checked" : ""} class="task-status">
         <p><strong>${task.title}</strong></p>
         <p>${task.description}</p>
         <p><small>Deadline: ${task.deadline}</small></p>
@@ -67,12 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       taskDiv.querySelector('.task-status').addEventListener('change', () => {
-        task.completed = taskDiv.querySelector('.task-status').checked ? true: false;
+        task.status = taskDiv.querySelector('.task-status').checked ? "completed" : "pending";
         renderTasks(filter);
         updateSidebar();
 
         // Show completion popup
-        if (task.completed === true) {
+        if (task.status === "completed") {
           completionPopup.style.display = 'block';
         }
 
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Hide "Add Task" button for completed tasks
-    if (filter === true || filter == false) {
+    if (filter === "completed" || filter == "pending") {
       addTaskButton.style.display = "none";
     } else {
       addTaskButton.style.display = "block";
@@ -104,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Update sidebar counts
   function updateSidebar() {
-    const completedCount = tasks.filter(task => task.completed == true).length;
-    const pendingCount = tasks.filter(task => task.completed == false).length;
+    const completedCount = tasks.filter(task => task.status === "completed").length;
+    const pendingCount = tasks.filter(task => task.status === "pending").length;
 
     document.querySelector('[data-filter="completed"]').innerText = `Completed Tasks (${completedCount})`;
     document.querySelector('[data-filter="pending"]').innerText = `Pending Tasks (${pendingCount})`;
@@ -168,10 +168,9 @@ function createDoughnutChart(completedTasks, pendingTasks) {
 
 function updateTaskChart() {
   
-  const completedTasks = tasks.filter(task => task.completed == true).length;
-  const pendingTasks = tasks.filter(task => task.completed === false).length;
+  const completedTasks = tasks.filter(task => task.status === "completed").length;
+  const pendingTasks = tasks.filter(task => task.status === "pending").length;
   // Call the function to update the chart
   console.log("Updating chart: Completed:", completedTasks, "Pending:", pendingTasks);
-
   createDoughnutChart(completedTasks, pendingTasks);
 }
