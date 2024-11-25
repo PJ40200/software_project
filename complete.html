@@ -5,65 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Manager</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="task-manager">
-    <header>
-      <h2>Welcome, William Jones!</h2>
-      <p>You have <span id="active-tasks">4 active tasks</span></p>
-    </header>
-    <main>
-      <div class="tasks-section">
-        <h3>Completed Tasks</h3>
-        <div class="task-list" id="completed-tasks">
-          <!-- Example Tasks -->
-          <div class="task" data-id="1">
-            <p><strong>Water Plants</strong></p>
-            <p>Water the indoor plants, especially the ones near the living room window.</p>
-            <div class="task-meta">
-              <span class="priority medium">medium</span>
-              <button class="edit-task">✏️</button>
-              <button class="delete-task">🗑️</button>
-            </div>
-          </div>
-          <div class="task" data-id="2">
-            <p><strong>Backup Files</strong></p>
-            <p>Back up all important files to the cloud storage before the weekend.</p>
-            <div class="task-meta">
-              <span class="priority medium">medium</span>
-              <button class="edit-task">✏️</button>
-              <button class="delete-task">🗑️</button>
-            </div>
-          </div>
-        </div>
-        <div class="add-task">
-          <button id="add-task-btn">Add New Task</button>
-        </div>
-      </div>
-      <aside>
-        <div class="user-info">
-          <h3>Hello, William Jones</h3>
-          <ul>
-            <li>Total Tasks: <span id="total-tasks">6</span></li>
-            <li>In Progress: <span id="in-progress">4</span></li>
-            <li>Open Tasks: <span id="open-tasks">4</span></li>
-            <li>Completed: <span id="completed">2</span></li>
-          </ul>
-        </div>
-        <div class="activity">
-          <h4>Activity</h4>
-          <p>Task Completion improved by <strong>12%</strong> this month</p>
-        </div>
+    <nav class="navbar">
+      <h1>Task Manager</h1>
+    </nav>
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="left-sidebar">
+        <h3>Filter Tasks</h3>
+        <ul>
+          <li><a href="#" data-filter="completed">Completed Tasks (0)</a></li>
+          <li><a href="#" data-filter="pending">Pending Tasks (0)</a></li>
+          <li><a href="#" data-filter="all">All Tasks</a></li>
+        </ul>
       </aside>
-      <div class="sidebar">
-         <a href="#">Home</a>
-         <a href=""></a>
+
+      <!-- Main Content -->
+      <div class="content">
+        <header>
+          <!-- <h2>Welcome, William Jones!</h2>
+          <p>You have <span id="active-tasks">4 active tasks</span></p> -->
+        </header>
+        <div class="tasks-section">
+          <h3>All Tasks</h3>
+          <div class="task-list" id="task-list">
+            <!-- Tasks will render here -->
+          </div>
+          <div class="add-task">
+            <button id="add-task-btn" class="btn">Add New Task</button>
+          </div>
+        </div>
       </div>
-  
-    </main>
+
+      <!-- Right Sidebar -->
+      <aside class="right-sidebar">
+        <h3>Task Analysis</h3>
+        <canvas id="task-chart" width="400" height="400"></canvas>
+      </aside>
+      
+    </div>
   </div>
+
+  <!-- Task Modal -->
+  <div id="task-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-modal" class="close">&times;</span>
+      <h3>Add New Task</h3>
+      <form id="task-form">
+        <label for="task-name">Task Name:</label>
+        <input type="text" id="task-name" required>
+        
+        <label for="task-desc">Description:</label>
+        <textarea id="task-desc" rows="3" required></textarea>
+        
+        <label for="task-priority">Priority:</label>
+        <div class="priority-options">
+          <input type="radio" id="priority-low" name="priority" value="low" required>
+          <label for="priority-low">Low</label>
+
+          <input type="radio" id="priority-medium" name="priority" value="medium" required>
+          <label for="priority-medium">Medium</label>
+
+          <input type="radio" id="priority-high" name="priority" value="high" required>
+          <label for="priority-high">High</label>
+        </div>
+
+        <label for="task-deadline">Deadline:</label>
+        <input type="date" id="task-deadline" required>
+        
+        <button type="submit" class="btn">Add Task</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Task Completion Pop-up -->
+  <div id="completion-popup" class="popup">
+    <div class="popup-content">
+      <h4>Task Completed!</h4>
+      <p>Your task has been marked as completed.</p>
+      <button id="close-popup" class="btn">Close</button>
+    </div>
+  </div>
+
   <script src="scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
-
-
