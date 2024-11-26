@@ -5,14 +5,15 @@
     "mongodb": "^6.11.0",
     "mongoose": "^8.8.2"
   },
+  "type": "module",
   "name": "se_project",
   "description": "Task Manager website with user-friendly UI and functionality.",
   "version": "1.0.0",
-  "main": "scripts.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon -r src/index.js",
-    "start" : "index.js"
+    "dev": "node -r dotenv/config --experimental-json-modules src/utils/index.js",
+    "start": "node src/utils/index.js"
   },
   "author": "Prachi Jindal",
   "license": "ISC"
