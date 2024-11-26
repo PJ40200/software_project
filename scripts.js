@@ -1,3 +1,6 @@
+let tasks = [];
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const taskList = document.getElementById('task-list');
   const addTaskButton = document.getElementById('add-task-btn');
@@ -7,8 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.left-sidebar ul li a');
   const completionPopup = document.getElementById('completion-popup');
   const closePopupButton = document.getElementById('close-popup');
-
-  let tasks = [];
 
   // Open the modal
   addTaskButton.addEventListener('click', () => {
@@ -167,10 +168,8 @@ function createDoughnutChart(completedTasks, pendingTasks) {
 }
 
 function updateTaskChart() {
-  
   const completedTasks = tasks.filter(task => task.status === "completed").length;
   const pendingTasks = tasks.filter(task => task.status === "pending").length;
   // Call the function to update the chart
-  console.log("Updating chart: Completed:", completedTasks, "Pending:", pendingTasks);
   createDoughnutChart(completedTasks, pendingTasks);
 }
