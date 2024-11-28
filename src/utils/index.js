@@ -6,14 +6,20 @@ import User from "../models/user.models.js";
 import Task from "../models/tasks.models.js";
 import pasth from "path";
 import bcrypt from "bcrypt";
-const PORT = 8000;
+import app from "../app.js";
 
 dotenv.config({
     path : 'src/.env'
 })
 // console.log("MONGODB_URI:", process.env.MONGODB_URI);
 // console.log("DB_NAME:", DB_NAME);
+// index.js
 
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+/*
 const app= express();
 
 app.get('/',(req,res) => {
@@ -26,7 +32,7 @@ app.get('/signup',(req,res) => {
 app.listen(PORT,() => {
   console.log("Server running on PORT ${PORT}");
 })
-
+*/
 /*
 ( async () => {
     try{
