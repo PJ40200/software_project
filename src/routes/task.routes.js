@@ -22,7 +22,7 @@ taskrouter.post("/tasks", authenticateToken, async (req, res) => {
   const { title, description, priority, deadline,status} = req.body;
 
 
-
+  console.log("Recieved the data");
   try {
     const task = new Task({
       title,

@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Fetch tasks from the API
+  console.log(localStorage.getItem("authToken"));
   const token = localStorage.getItem("authToken");
 
   try {
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const description = document.getElementById('task-desc').value;
     const priority = document.querySelector('input[name="priority"]:checked').value;
     const deadline = document.getElementById('task-deadline').value;
+    console.log("tasked submitted");
 
     // Create task object
     const newTask = {
@@ -81,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateTaskChart(); // Ensure the chart is updated after adding a task
 
     // Send the new task to the server
-    const token = localStorage.getItem("authenticateToken");
+    const token = localStorage.getItem("authToken");
     // console.log(authToken);
     try {
       const response = await fetch("/api/tasks", {
