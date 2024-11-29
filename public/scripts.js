@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <p>${task.description}</p>
         <p><small>Deadline: ${task.deadline}</small></p>
         <div class="task-meta">
-          <span class="priority ${task.priority}" style="background-color : #dfdd65">${task.priority}</span>
+          <span class="priority ${task.priority}" style="background-color : #f1e892; width : 65px; height: 20px; text-align: center">${task.priority}</span>
           <button class="delete-task">🗑️</button>
         </div>
       `;
