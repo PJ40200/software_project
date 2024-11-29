@@ -18,7 +18,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 // Add Task
-router.post("/api/tasks", authenticateToken, async (req, res) => {
+router.post("/tasks", authenticateToken, async (req, res) => {
   const { title, description, priority, deadline,status} = req.body;
 
 

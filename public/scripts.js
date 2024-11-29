@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Send the new task to the server
     const token = localStorage.getItem("authToken");
-
+    console.log(authToken);
     try {
       const response = await fetch("/api/tasks", {
         method: "POST",
