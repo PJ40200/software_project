@@ -1,6 +1,5 @@
 let tasks = [];
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const taskList = document.getElementById('task-list');
   const addTaskButton = document.getElementById('add-task-btn');
@@ -70,20 +69,19 @@ document.addEventListener('DOMContentLoaded', () => {
       taskDiv.querySelector('.task-status').addEventListener('change', () => {
         task.status = taskDiv.querySelector('.task-status').checked ? "completed" : "pending";
         renderTasks(filter);
-        updateSidebar();
+        updateSidebar(); // Update the task summary
+        updateTaskChart(); // Ensure the chart is updated after changing status
 
         // Show completion popup
         if (task.status === "completed") {
           completionPopup.style.display = 'block';
         }
-
-        updateTaskChart(); // Ensure the chart is updated after changing status
       });
 
       taskDiv.querySelector('.delete-task').addEventListener('click', () => {
         tasks = tasks.filter(t => t.id !== task.id);
         renderTasks(filter);
-        updateSidebar();
+        updateSidebar(); // Update the task summary
         updateTaskChart(); // Ensure the chart is updated after deleting a task
       });
 
@@ -91,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Hide "Add Task" button for completed tasks
-    if (filter === "completed" || filter == "pending") {
+    if (filter === "completed" || filter === "pending") {
       addTaskButton.style.display = "none";
     } else {
       addTaskButton.style.display = "block";
@@ -103,13 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
     completionPopup.style.display = 'none';
   });
 
-  // Update sidebar counts
+  // Update sidebar counts and task summary
   function updateSidebar() {
     const completedCount = tasks.filter(task => task.status === "completed").length;
-    const pendingCount = tasks.filter(task => task.status === "pending").length;
+    const totalTasks = tasks.length;
 
+    // Update the sidebar filter counts
     document.querySelector('[data-filter="completed"]').innerText = `Completed Tasks (${completedCount})`;
-    document.querySelector('[data-filter="pending"]').innerText = `Pending Tasks (${pendingCount})`;
+    document.querySelector('[data-filter="pending"]').innerText = `Pending Tasks (${totalTasks - completedCount})`;
+
+    // Update the task summary in the right sidebar
+    document.getElementById('total-tasks').innerText = totalTasks;
+    document.getElementById('completed-tasks').innerText = completedCount;
   }
 
   // Sidebar filtering
@@ -121,55 +124,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Create a doughnut chart
+  function createDoughnutChart(completedTasks, pendingTasks) {
+    const ctx = document.getElementById('task-chart').getContext('2d');
+
+    // Destroy the chart if it already exists to prevent multiple charts
+    if (window.taskChart) {
+      window.taskChart.destroy();
+    }
+
+    // Create a new doughnut chart
+    window.taskChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed Tasks', 'Pending Tasks'],
+        datasets: [{
+          label: 'Task Distribution',
+          data: [completedTasks, pendingTasks],
+          backgroundColor: [
+            '#4CAF50', // Green for completed tasks
+            '#FF5722', // Orange for pending tasks
+          ],
+          borderColor: [
+            '#388E3C', // Dark green
+            '#E64A19', // Dark orange
+          ],
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+        },
+      },
+    });
+  }
+
+  // Update task chart
+  function updateTaskChart() {
+    const completedTasks = tasks.filter(task => task.status === "completed").length;
+    const pendingTasks = tasks.filter(task => task.status === "pending").length;
+    createDoughnutChart(completedTasks, pendingTasks);
+  }
+
   renderTasks();
 });
 
-function createDoughnutChart(completedTasks, pendingTasks) {
-  const ctx = document.getElementById('task-chart').getContext('2d');
-
-  console.log("Completed Tasks:", completedTasks, "Pending Tasks:", pendingTasks);
-
-  // Log the values for debugging
-  console.log("Completed Tasks:", completedTasks, "Pending Tasks:", pendingTasks);
-
-  // Destroy the chart if it already exists to prevent multiple charts
-  if (window.taskChart) {
-    window.taskChart.destroy();
-  }
-
-  // Create a new doughnut chart
-  window.taskChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Completed Tasks', 'Pending Tasks'],
-      datasets: [{
-        label: 'Task Distribution',
-        data: [completedTasks, pendingTasks],
-        backgroundColor: [
-          '#4CAF50', // Green for completed tasks
-          '#FF5722', // Orange for pending tasks
-        ],
-        borderColor: [
-          '#388E3C', // Dark green
-          '#E64A19', // Dark orange
-        ],
-        borderWidth: 1,
-      }],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-        },
-      },
-    },
-  });
-}
-
-function updateTaskChart() {
-  const completedTasks = tasks.filter(task => task.status === "completed").length;
-  const pendingTasks = tasks.filter(task => task.status === "pending").length;
-  // Call the function to update the chart
-  createDoughnutChart(completedTasks, pendingTasks);
-}
