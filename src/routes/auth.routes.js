@@ -32,8 +32,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-export default router;
-
 // sign in
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -70,3 +68,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "An error occurred during login" });
   }
 });
+
+
+export default router;

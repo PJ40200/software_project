@@ -122,11 +122,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const taskDiv = document.createElement('div');
       taskDiv.classList.add('task');
       taskDiv.setAttribute('data-id', task.id);
+      const rawDeadline = new Date(task.deadline);
+      const formattedDeadline = rawDeadline.toISOString().split('T')[0];
       taskDiv.innerHTML = `
         <input type="checkbox" ${task.status === "completed" ? "checked" : ""} class="task-status">
         <p><strong>${task.title}</strong></p>
         <p>${task.description}</p>
-        <p><small>Deadline: ${task.deadline}</small></p>
+        <p><small>Deadline: ${formattedDeadline}</small></p>
         <div class="task-meta">
           <span class="priority ${task.priority}" style="background-color : #f1e892; width : 65px; height: 20px; text-align: center">${task.priority}</span>
           <button class="delete-task">🗑️</button>

@@ -3,7 +3,7 @@ import Task from "../models/tasks.models.js";
 import User from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 
-const router = express.Router();
+const taskrouter = express.Router();
 
 // Middleware to verify JWT
 const authenticateToken = (req, res, next) => {
@@ -18,7 +18,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 // Add Task
-router.post("/tasks", authenticateToken, async (req, res) => {
+taskrouter.post("/tasks", authenticateToken, async (req, res) => {
   const { title, description, priority, deadline,status} = req.body;
 
 
@@ -49,7 +49,7 @@ router.post("/tasks", authenticateToken, async (req, res) => {
 });
 
 // Get Tasks for a User
-router.get("/tasks", authenticateToken, async (req, res) => {
+taskrouter.get("/tasks", authenticateToken, async (req, res) => {
   try {
     const tasks = await Task.find({ userId: req.user.id });
     res.status(200).json(tasks);
@@ -59,4 +59,4 @@ router.get("/tasks", authenticateToken, async (req, res) => {
   }
 });
 
-export default router;
+export default taskrouter;

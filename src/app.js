@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import router from "./routes/auth.routes.js";
+import taskrouter  from "./routes/task.routes.js";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -26,6 +27,7 @@ app.use(express.static("public")); // Serve static files (e.g., HTML, CSS, JS)
 
 // Routes
 app.use("/api", router);
+app.use("/api", taskrouter);
 
 // MongoDB Connection
 mongoose
