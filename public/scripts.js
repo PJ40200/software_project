@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       deadline,
       status: "pending",
     };
-
+    console.log(newTask);
     // Add task to the local array and update the DOM
     tasks.push(newTask);
     taskModal.style.display = 'none';
@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateTaskChart(); // Ensure the chart is updated after adding a task
 
     // Send the new task to the server
-    const token = localStorage.getItem("authToken");
-    console.log(authToken);
+    const token = localStorage.getItem("authenticateToken");
+    // console.log(authToken);
     try {
       const response = await fetch("/api/tasks", {
         method: "POST",
@@ -90,15 +90,24 @@ document.addEventListener('DOMContentLoaded', async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newTask),
+        body: JSON.stringify({
+          title,
+          description,
+          priority,
+          deadline,
+          status: "pending",
+        }),
       });
 
       if (!response.ok) {
         console.error("Error adding task:", await response.json());
         alert("Failed to add task.");
       }
+      else{
+        console.log("Task added successfully");
+      }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
       alert("An error occurred while adding the task that u have added.");
     }
   });
@@ -119,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <p>${task.description}</p>
         <p><small>Deadline: ${task.deadline}</small></p>
         <div class="task-meta">
-          <span class="priority ${task.priority}">${task.priority}</span>
+          <span class="priority ${task.priority}" style="background-color : #dfdd65">${task.priority}</span>
           <button class="delete-task">🗑️</button>
         </div>
       `;
