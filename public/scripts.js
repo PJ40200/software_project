@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while adding the task.");
+      alert("An error occurred while adding the task that u have added.");
     }
   });
 

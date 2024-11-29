@@ -29,8 +29,10 @@ app.use("/api", router);
 
 // MongoDB Connection
 mongoose
-  .connect(process.env.MONGODB_URI);
-
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+  
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 export default app;

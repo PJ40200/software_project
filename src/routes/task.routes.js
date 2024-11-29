@@ -18,8 +18,8 @@ const authenticateToken = (req, res, next) => {
 };
 
 // Add Task
-router.post("/tasks", authenticateToken, async (req, res) => {
-  const { title, description, priority, deadline } = req.body;
+router.post("/api/tasks", authenticateToken, async (req, res) => {
+  const { title, description, priority, deadline, status } = req.body;
 
   try {
     const task = new Task({
@@ -27,6 +27,7 @@ router.post("/tasks", authenticateToken, async (req, res) => {
       description,
       priority,
       deadline,
+      status,
       userId: req.user.id, // Extracted from JWT token
     });
 
@@ -40,7 +41,7 @@ router.post("/tasks", authenticateToken, async (req, res) => {
     res.status(201).json({ message: "Task added successfully", task });
   } catch (error) {
     console.error("Error adding task:", error);
-    res.status(500).json({ error: "An error occurred while adding the task" });
+    res.status(500).json({ error: "An error occurred while adding this new task" });
   }
 });
 

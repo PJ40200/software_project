@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : [true,"Password is required"]
     },
+    tasks: [
+        { type: mongoose.Schema.Types.ObjectId, 
+          ref: "Task" }
+    ], // Reference to Task model
 }, {timestamps : true})
 
 const User = mongoose.model("User", userSchema);
