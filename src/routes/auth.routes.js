@@ -31,3 +31,34 @@ router.post("/register", async (req, res) => {
 });
 
 export default router;
+// sign in
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    console.log("Login attempt for email:", email);
+
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Compare passwords
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log("Invalid password");
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    console.log("Login successful for user:", email);
+    res.status(200).json({ message: "Login successful", token });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "An error occurred during login" });
+  }
+});

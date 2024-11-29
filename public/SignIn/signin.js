@@ -5,18 +5,20 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
-    const response = await fetch("http://localhost:5000/auth/register", {
+    const response = await fetch("/api/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email, password }),
     });
-
+  
     const data = await response.json();
-
+    
     if (response.ok) {
       alert("Sign-in successful!");
       localStorage.setItem("authToken", data.token); // Save JWT token
-      window.location.href = "/dashboard.html"; // Redirect to dashboard
+      window.location.href = "../complete.html"; // Redirect to dashboard
     } else {
       alert(`Error: ${data.error}`);
     }
