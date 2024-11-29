@@ -25,7 +25,12 @@ const taskSchema = mongoose.Schema(
         },
         Date_Created :{
             type : Date
-        }
+        },
+        userId: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "User", // User who owns the task
+            required: true 
+        } 
     }, {timestamps : true}
 )
 

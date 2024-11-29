@@ -1,6 +1,8 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import User from "../models/user.models.js";
+import jwt from "jsonwebtoken";
+
 
 const router = express.Router();
 
@@ -31,6 +33,7 @@ router.post("/register", async (req, res) => {
 });
 
 export default router;
+
 // sign in
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -55,8 +58,13 @@ router.post("/login", async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
+  
+
     console.log("Login successful for user:", email);
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful",
+       token, 
+       username: user.username,
+      });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "An error occurred during login" });

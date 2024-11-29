@@ -1,6 +1,6 @@
 let tasks = [];
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const taskList = document.getElementById('task-list');
   const addTaskButton = document.getElementById('add-task-btn');
   const taskModal = document.getElementById('task-modal');
@@ -9,6 +9,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.left-sidebar ul li a');
   const completionPopup = document.getElementById('completion-popup');
   const closePopupButton = document.getElementById('close-popup');
+
+  // Add username to the page
+  const username = localStorage.getItem("username");
+
+  // Check if username exists and update the DOM
+  if (username) {
+    document.getElementById("user-name").textContent = username;
+  } else {
+    console.error("No username found in local storage.");
+    document.getElementById("user-name").textContent = "Guest";
+  }
+
+  // Fetch tasks from the API
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch("/api/tasks", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const fetchedTasks = await response.json();
+      tasks = fetchedTasks; // Load tasks into local array
+      renderTasks();
+      updateSidebar();
+      updateTaskChart();
+    } else {
+      console.error("Error fetching tasks:", await response.json());
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 
   // Open the modal
   addTaskButton.addEventListener('click', () => {
@@ -21,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Submit the new task
-  taskForm.addEventListener('submit', (e) => {
+  taskForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const title = document.getElementById('task-name').value;
@@ -29,20 +63,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const priority = document.querySelector('input[name="priority"]:checked').value;
     const deadline = document.getElementById('task-deadline').value;
 
-    tasks.push({
-      id: tasks.length + 1,
+    // Create task object
+    const newTask = {
       title,
       description,
       priority,
       deadline,
       status: "pending",
-    });
+    };
 
+    // Add task to the local array and update the DOM
+    tasks.push(newTask);
     taskModal.style.display = 'none';
     taskForm.reset();
     renderTasks();
     updateSidebar();
     updateTaskChart(); // Ensure the chart is updated after adding a task
+
+    // Send the new task to the server
+    const token = localStorage.getItem("authToken");
+
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      if (!response.ok) {
+        console.error("Error adding task:", await response.json());
+        alert("Failed to add task.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while adding the task.");
+    }
   });
 
   // Render tasks based on filter
@@ -76,6 +134,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (task.status === "completed") {
           completionPopup.style.display = 'block';
         }
+
+        // Send the updated task status to the server
+        const token = localStorage.getItem("authToken");
+
+        fetch(`/api/tasks/${task.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: task.status }),
+        })
+        .then(response => {
+          if (!response.ok) {
+            console.error("Error updating task status:", response);
+          }
+        })
+        .catch(error => console.error("Error:", error));
       });
 
       taskDiv.querySelector('.delete-task').addEventListener('click', () => {
@@ -83,6 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTasks(filter);
         updateSidebar(); // Update the task summary
         updateTaskChart(); // Ensure the chart is updated after deleting a task
+
+        // Send delete request to the server
+        const token = localStorage.getItem("authToken");
+
+        fetch(`/api/tasks/${task.id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            console.error("Error deleting task:", response);
+          }
+        })
+        .catch(error => console.error("Error:", error));
       });
 
       taskList.appendChild(taskDiv);
@@ -172,4 +264,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderTasks();
 });
-

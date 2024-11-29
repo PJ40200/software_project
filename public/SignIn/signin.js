@@ -18,6 +18,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     if (response.ok) {
       alert("Sign-in successful!");
       localStorage.setItem("authToken", data.token); // Save JWT token
+      localStorage.setItem("username", data.username);  // save username
       window.location.href = "../complete.html"; // Redirect to dashboard
     } else {
       alert(`Error: ${data.error}`);
