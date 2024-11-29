@@ -1,5 +1,5 @@
 import express from "express";
-import Task from "../models/task.models.js";
+import Task from "../models/tasks.models.js";
 import User from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 
@@ -19,7 +19,9 @@ const authenticateToken = (req, res, next) => {
 
 // Add Task
 router.post("/api/tasks", authenticateToken, async (req, res) => {
-  const { title, description, priority, deadline, status } = req.body;
+  const { title, description, priority, deadline,status} = req.body;
+
+
 
   try {
     const task = new Task({
@@ -30,6 +32,7 @@ router.post("/api/tasks", authenticateToken, async (req, res) => {
       status,
       userId: req.user.id, // Extracted from JWT token
     });
+    console.log("Received Task Data:", req.body);
 
     await task.save();
 
@@ -40,7 +43,7 @@ router.post("/api/tasks", authenticateToken, async (req, res) => {
 
     res.status(201).json({ message: "Task added successfully", task });
   } catch (error) {
-    console.error("Error adding task:", error);
+    console.error("Error adding task:", error.message);
     res.status(500).json({ error: "An error occurred while adding this new task" });
   }
 });
